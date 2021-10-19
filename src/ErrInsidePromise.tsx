@@ -14,14 +14,15 @@ async function mockApi(ms: number) {
   })
 }
 
-export function BreakOnPageLoad() {
+export function ErrInsidePromise() {
   useEffect(() => {
     mockApi(2000)
   }, [])
 
   return (
     <div>
-      <h1>Break on Page Load</h1>
+      <h1>Error inside Promise which is called inside useEffect()</h1>
+      <p>This page will break on Page Load</p>
     </div>
   )
 }

@@ -1,6 +1,7 @@
 import { BrowserRouter, Switch, Route, Link } from 'react-router-dom'
-import { BreakOnClick } from './BreakOnClick'
-import { BreakOnPageLoad } from './BreakOnPageLoad'
+import { ErrInsideOnClick } from './ErrInsideOnClick'
+import { ErrInsidePromise } from './ErrInsidePromise'
+import { ErrInsideRender } from './ErrInsideRender'
 
 export function Router() {
   return (
@@ -9,20 +10,26 @@ export function Router() {
         <nav>
           <ul>
             <li>
-              <Link to="/">Break onClick</Link>
+              <Link to="/">Error inside onClick</Link>
             </li>
             <li>
-              <Link to="/pageload">Break on Page Load</Link>
+              <Link to="/error-render">Error inside render()</Link>
+            </li>
+            <li>
+              <Link to="/error-promise">Error inside Promise</Link>
             </li>
           </ul>
         </nav>
       </header>
       <Switch>
         <Route exact path="/">
-          <BreakOnClick />
+          <ErrInsideOnClick />
         </Route>
-        <Route exact path="/pageload">
-          <BreakOnPageLoad />
+        <Route exact path="/error-render">
+          <ErrInsideRender />
+        </Route>
+        <Route exact path="/error-promise">
+          <ErrInsidePromise />
         </Route>
         <Route>
           <div>

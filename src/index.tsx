@@ -17,7 +17,34 @@ Sentry.init({
 
 ReactDOM.render(
   <React.StrictMode>
-    <Router />
+    <Sentry.ErrorBoundary
+      fallback={({ error, componentStack, resetError }) => (
+        <React.Fragment>
+          <h1>You have encountered an error</h1>
+          <p>
+            <div>Error:</div>
+            <div>{error.toString()}</div>
+          </p>
+          <p>
+            <div>Component Stack:</div>
+            <div>{componentStack}</div>
+          </p>
+          <button
+            onClick={() => {
+              // setCount(1)
+
+              /* When resetError() is called it will remove the Fallback component */
+              /* and render the Sentry ErrorBoundary's children in their initial state */
+              resetError()
+            }}
+          >
+            Click here to reset!
+          </button>
+        </React.Fragment>
+      )}
+    >
+      <Router />
+    </Sentry.ErrorBoundary>
   </React.StrictMode>,
   document.getElementById('root')
 )
