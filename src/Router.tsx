@@ -1,7 +1,6 @@
 import { BrowserRouter, Switch, Route, Link } from 'react-router-dom'
-import { Home } from './Home'
-import { About } from './About'
-import { Count } from './Count'
+import { BreakOnClick } from './BreakOnClick'
+import { BreakOnPageLoad } from './BreakOnPageLoad'
 
 export function Router() {
   return (
@@ -10,26 +9,20 @@ export function Router() {
         <nav>
           <ul>
             <li>
-              <Link to="/">Home</Link>
+              <Link to="/">Break onClick</Link>
             </li>
             <li>
-              <Link to="/about">About</Link>
-            </li>
-            <li>
-              <Link to="/count">Count</Link>
+              <Link to="/pageload">Break on Page Load</Link>
             </li>
           </ul>
         </nav>
       </header>
       <Switch>
         <Route exact path="/">
-          <Home />
+          <BreakOnClick />
         </Route>
-        <Route exact path="/about">
-          <About />
-        </Route>
-        <Route exact path="/count">
-          <Count />
+        <Route exact path="/pageload">
+          <BreakOnPageLoad />
         </Route>
         <Route>
           <div>

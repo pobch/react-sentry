@@ -5,20 +5,23 @@ import { Severity } from '@sentry/react'
 async function mockApi(ms: number) {
   return new Promise((resolve, reject) => {
     setTimeout(() => {
+      // manual log
       Sentry.captureMessage('[log at unhandled prom] warning', Severity.Warning)
+
+      // throw promise error
       reject(new Error('[unhandle prom] api response error'))
     }, ms)
   })
 }
 
-export function About() {
+export function BreakOnPageLoad() {
   useEffect(() => {
     mockApi(2000)
   }, [])
 
   return (
     <div>
-      <h1>About</h1>
+      <h1>Break on Page Load</h1>
     </div>
   )
 }
