@@ -2,6 +2,7 @@ import { BrowserRouter, Switch, Route, Link } from 'react-router-dom'
 import { ErrInsideOnClick } from './ErrInsideOnClick'
 import { ErrInsidePromise } from './ErrInsidePromise'
 import { ErrInsideRender } from './ErrInsideRender'
+import { RealWorld } from './RealWorld'
 
 export function Router() {
   return (
@@ -18,6 +19,9 @@ export function Router() {
             <li>
               <Link to="/error-promise">Error inside Promise</Link>
             </li>
+            <li>
+              <Link to="/real-world">Real-world Error Handling</Link>
+            </li>
           </ul>
         </nav>
       </header>
@@ -30,6 +34,9 @@ export function Router() {
         </Route>
         <Route exact path="/error-promise">
           <ErrInsidePromise />
+        </Route>
+        <Route exact path="/real-world">
+          <RealWorld />
         </Route>
         <Route>
           <div>
