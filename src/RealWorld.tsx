@@ -62,8 +62,8 @@ export function RealWorld() {
       </p>
       <p>
         <strong>Data </strong>
-        <pre>{JSON.stringify(apiState.data, undefined, 2)}</pre>
       </p>
+      <pre>{JSON.stringify(apiState.data, undefined, 2)}</pre>
       <p>
         <strong>Error </strong>
         {apiState.error?.message}
