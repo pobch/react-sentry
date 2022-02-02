@@ -47,7 +47,7 @@ export function RealWorld() {
     async function fetchData() {
       setApiState({ status: 'loading', data: null, error: null })
       try {
-        const result = syncFunc()
+        syncFunc()
         const res = await asyncFunc()
         setApiState({ status: 'success', data: res.data, error: null })
       } catch (error) {
