@@ -20,15 +20,17 @@ async function fetch(): Promise<AxiosResponse<Record<string, any>[]>> {
   }
 }
 
-async function nested() {
-  try {
-    const res = await fetch()
-    return res
-  } catch (error) {
-    const newError = new Error('nested() error')
-    ;(newError as any).cause = error
-    throw newError
-  }
+async function asyncFunc() {
+  const res = await fetch()
+  return res
+}
+
+function validate() {
+  throw new Error('Invalid input')
+}
+
+function syncFunc() {
+  validate()
 }
 
 export function RealWorld() {
@@ -45,19 +47,17 @@ export function RealWorld() {
     async function fetchData() {
       setApiState({ status: 'loading', data: null, error: null })
       try {
-        const res = await nested()
+        const result = syncFunc()
+        const res = await asyncFunc()
         setApiState({ status: 'success', data: res.data, error: null })
       } catch (error) {
         if (error instanceof Error) {
           // ! Case: Manually send the error instance to Sentry
-          // Sentry.setExtra('errorObj', error)
-          Sentry.captureException(error, {
-            extra: { errorExtra: error },
-            contexts: { errorContext: { errorContext: error } },
-          })
+          Sentry.setExtra('errorObj', error)
+          Sentry.captureException(error)
 
           // ! Case: Automatically send console.error() to Sentry if there is `new CaptureConsole()` in `Sentry.init()`
-          // console.error(error)
+          console.error('log >>>', error)
 
           setApiState({ status: 'error', data: null, error: error })
         } else {
