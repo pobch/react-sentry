@@ -6,13 +6,13 @@ import axios, { AxiosResponse } from 'axios'
 async function fetch(): Promise<AxiosResponse<Record<string, any>[]>> {
   try {
     // ! Case: Throw (reject) with 500 response
-    // return await axios.get('http://localhost:8070/error500')
+    return await axios.get('http://localhost:8070/error500')
 
     // ! Case: Success with 302 -> 200
     // return await axios.get('http://localhost:8070/redirect/aws-staging.json')
 
     // ! Case: Success with 200
-    return await axios.get('http://localhost:8070/app-urls/aws-staging.json')
+    // return await axios.get('http://localhost:8070/app-urls/aws-staging.json')
   } catch (error) {
     const newError = new Error('fetch() error')
     ;(newError as any).cause = error
@@ -27,10 +27,10 @@ async function asyncFunc() {
 
 function validate() {
   // ! Case: Throw
-  throw new Error('Invalid input')
+  // throw new Error('Invalid input')
 
   // ! Case: Success
-  // return true
+  return true
 }
 
 function syncFunc() {
@@ -52,12 +52,12 @@ export function RealWorld() {
       setApiState({ status: 'loading', data: null, error: null })
       try {
         // ! Case: syncFunc() above `await` line
-        // syncFunc()
+        syncFunc()
 
         const res = await asyncFunc()
 
         // ! Case: syncFunc() below `await` line
-        syncFunc()
+        // syncFunc()
 
         setApiState({ status: 'success', data: res.data, error: null })
       } catch (error) {
