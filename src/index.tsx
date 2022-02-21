@@ -4,15 +4,15 @@ import { Router } from './Router'
 import reportWebVitals from './reportWebVitals'
 import * as Sentry from '@sentry/react'
 import { Integrations } from '@sentry/tracing'
-import { CaptureConsole } from '@sentry/integrations'
+// import { CaptureConsole } from '@sentry/integrations'
 
 Sentry.init({
   dsn: 'https://5f577b60f749443396afebf37cd863e8@o1000611.ingest.sentry.io/5959982',
   integrations: [
     new Integrations.BrowserTracing(),
-    new CaptureConsole({
-      levels: ['error'],
-    }) as any,
+    // new CaptureConsole({
+    //   levels: ['error'],
+    // }) as any,
   ],
 
   // Set tracesSampleRate to 1.0 to capture 100%

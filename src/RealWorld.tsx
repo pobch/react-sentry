@@ -14,9 +14,9 @@ async function fetch(): Promise<AxiosResponse<Record<string, any>[]>> {
     // ! Case: Success with 200
     // return await axios.get('http://localhost:8070/app-urls/aws-staging.json')
   } catch (error) {
-    const newError = new Error('fetch() error')
-    ;(newError as any).cause = error
-    throw newError
+    // @ts-expect-error
+    const wrappedAxiosError = new Error('wrappedAxiosError at fetch()', { cause: error })
+    throw wrappedAxiosError
   }
 }
 
@@ -25,7 +25,7 @@ async function asyncFunc() {
   return res
 }
 
-function validate() {
+function validateJson() {
   // ! Case: Throw
   // throw new Error('Invalid input')
 
@@ -34,7 +34,7 @@ function validate() {
 }
 
 function syncFunc() {
-  validate()
+  validateJson()
 }
 
 export function RealWorld() {
@@ -52,22 +52,26 @@ export function RealWorld() {
       setApiState({ status: 'loading', data: null, error: null })
       try {
         // ! Case: syncFunc() above `await` line
-        syncFunc()
+        // syncFunc()
 
         const res = await asyncFunc()
 
         // ! Case: syncFunc() below `await` line
-        // syncFunc()
+        syncFunc()
 
         setApiState({ status: 'success', data: res.data, error: null })
       } catch (error) {
         if (error instanceof Error) {
           // ! Case: Manually send the error instance to Sentry
-          Sentry.setExtra('errorObj', error)
-          Sentry.captureException(error)
+          // Sentry.setExtra('errorObj', error)
+          Sentry.captureException(error, {
+            contexts: {
+              logContext: { text: 'Error while fetching data on RealWorld mounted' },
+            },
+          })
 
           // ! Case: Automatically send console.error() to Sentry if there is `new CaptureConsole()` in `Sentry.init()`
-          console.error('log >>>', error)
+          // console.error('local log >>>', error)
 
           setApiState({ status: 'error', data: null, error: error })
         } else {
